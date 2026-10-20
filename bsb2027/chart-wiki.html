@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tiny Chart JS — Wiki & Examples</title>
+<style>
+body{font-family:Arial,Helvetica,sans-serif;max-width:1050px;margin:40px auto;padding:0 20px;color:#333;line-height:1.55}
+h1,h2{color:#222} h2{margin-top:42px;border-bottom:1px solid #ddd;padding-bottom:7px}
+code,pre{font-family:Consolas,monospace} pre{background:#f6f7f8;padding:14px;overflow:auto;border-radius:6px}
+.demo{border:1px solid #ddd;border-radius:8px;padding:18px;margin:14px 0 28px;background:#fff}
+.note{background:#fff8dc;border-left:4px solid #f0ad4e;padding:10px 14px}
+table{border-collapse:collapse;width:100%;margin:15px 0} th,td{border:1px solid #ddd;padding:8px;text-align:left}
+th{background:#f5f5f5}
+</style>
+<script src="chart.js?v=x"></script>
+</head>
+<body>
+
+<h1>Tiny Chart JS</h1>
+<p>A small, dependency-free SVG chart library. Put simple CSV-style chart data inside a <code>&lt;div class="chart"&gt;</code> and the library renders it automatically.</p>
+
+<div class="note">
+<strong>One data format only:</strong> the first row contains headings, the first column contains categories/X-axis labels, and all remaining columns are numeric series.
+</div>
+
+<h2>1. Basic bar</h2>
+<pre>&lt;div class="chart"&gt;
+Month,Qty;
+Jan,120;
+Feb,180;
+Mar,150;
+Apr,220
+&lt;/div&gt;</pre>
+<div class="demo">
+<div class="chart">
+Month,Qty;
+Jan,120;
+Feb,180;
+Mar,150;
+Apr,220
+</div>
+</div>
+
+<h2>2. Grouped bars</h2>
+<p>Add more value columns. Each column becomes a series.</p>
+<pre>&lt;div class="chart"&gt;
+Month,Tom,Sam,Peter;
+Jan,120,180,90;
+Feb,160,130,150;
+Mar,190,210,170;
+Apr,140,185,220
+&lt;/div&gt;</pre>
+<div class="demo">
+<div class="chart" data-w="700" data-h="300">
+Month,Tom,Sam,Peter;
+Jan,120,180,90;
+Feb,160,130,150;
+Mar,190,210,170;
+Apr,140,185,220
+</div>
+</div>
+
+<h2>3. Title, size and values</h2>
+<pre>&lt;div class="chart"
+ data-title="Monthly Orders"
+ data-w="700"
+ data-h="320"
+ data-val-show="1"&gt;
+Month,Qty;
+Jan,120;
+Feb,180;
+Mar,150;
+Apr,220
+&lt;/div&gt;</pre>
+<div class="demo">
+<div class="chart" data-title="Monthly Orders" data-w="700" data-h="320" data-val-show="1">
+Month,Qty;
+Jan,120;
+Feb,180;
+Mar,150;
+Apr,220
+</div>
+</div>
+
+<h2>4. Axis titles and units</h2>
+<pre>&lt;div class="chart"
+ data-x-title="Month"
+ data-y-title="Sales"
+ data-y-unit="$"&gt;
+Month,Sales;
+Jan,1200;
+Feb,1800;
+Mar,1500
+&lt;/div&gt;</pre>
+<div class="demo">
+<div class="chart" data-x-title="Month" data-y-title="Sales" data-y-unit="$" data-w="700" data-h="320">
+Month,Sales;
+Jan,1200;
+Feb,1800;
+Mar,1500
+</div>
+</div>
+
+<h2>5. Negative values</h2>
+<div class="demo">
+<div class="chart" data-title="Profit / Loss" data-val-show="1" data-w="700" data-h="320">
+Month,Result;
+Jan,120;
+Feb,-80;
+Mar,150;
+Apr,-40;
+May,220
+</div>
+</div>
+
+<h2>6. Stacked bars -- looks buggy</h2>
+<p>Use <code>data-chart="stack"</code>. The old PHP name <code>barV</code> is also accepted.</p>
+<pre>&lt;div class="chart" data-chart="stack"&gt;
+Month,Tom,Sam,Peter;
+Jan,120,180,90;
+Feb,160,130,150;
+Mar,190,210,170
+&lt;/div&gt;</pre>
+<div class="demo">
+<div class="chart" data-chart="stack" data-title="Stacked Sales" data-w="700" data-h="320" data-val-show="1">
+Month,Tom,Sam,Peter;
+Jan,120,180,90;
+Feb,160,130,150;
+Mar,190,210,170
+</div>
+</div>
+
+<h2>7. Stacked bars with negative values</h2>
+<p>Positive and negative stacks are accumulated separately.</p>
+<div class="demo">
+<div class="chart" data-chart="stack" data-title="Positive / Negative Stack" data-w="700" data-h="320">
+Month,A,B,C;
+Jan,100,-40,30;
+Feb,-50,-30,120;
+Mar,80,60,-25
+</div>
+</div>
+
+<h2>8. Line chart</h2>
+<pre>&lt;div class="chart" data-chart="line"&gt;
+Month,Tom,Sam;
+Jan,120,180;
+Feb,160,130;
+Mar,190,210
+&lt;/div&gt;</pre>
+<div class="demo">
+<div class="chart" data-chart="line" data-title="Monthly Trend" data-w="700" data-h="320" data-val-show="1">
+Month,Tom,Sam;
+Jan,120,180;
+Feb,160,130;
+Mar,190,210;
+Apr,140,185
+</div>
+</div>
+
+<h2>9. Pie chart</h2>
+<p>Pie charts use the first numeric series.</p>
+<pre>&lt;div class="chart" data-chart="pie" data-pie-pct="1"&gt;
+Staff,Sales;
+Tom,120;
+Sam,180;
+Peter,90
+&lt;/div&gt;</pre>
+<div class="demo">
+<div class="chart" data-chart="pie" data-title="Sales Share" data-pie-pct="1" data-w="650" data-h="320">
+Staff,Sales;
+Tom,120;
+Sam,180;
+Peter,90
+</div>
+</div>
+
+<h2>10. Donut</h2>
+<pre>&lt;div class="chart" data-chart="donut" data-pie-pct="1"&gt;
+Staff,Sales;
+Tom,120;
+Sam,180;
+Peter,90
+&lt;/div&gt;</pre>
+<div class="demo">
+<div class="chart" data-chart="donut" data-title="Sales Share" data-pie-pct="1" data-w="650" data-h="320">
+Staff,Sales;
+Tom,120;
+Sam,180;
+Peter,90
+</div>
+</div>
+
+<h2>11. X labels</h2>
+<p><code>data-x-angle</code> rotates labels. <code>data-x-skip</code> explicitly skips labels; <code>data-x-skip-max</code> automatically reduces crowded labels.</p>
+<div class="demo">
+<div class="chart" data-title="Daily Orders" data-x-angle="35" data-x-skip-max="8" data-w="750" data-h="340">
+Date,Orders;
+Sep 01,12;
+Sep 02,18;
+Sep 03,15;
+Sep 04,22;
+Sep 05,17;
+Sep 06,25;
+Sep 07,20;
+Sep 08,28;
+Sep 09,24;
+Sep 10,30;
+Sep 11,27;
+Sep 12,32
+</div>
+</div>
+
+<h2>12. Legend</h2>
+<p>For multi-series charts the default legend is on the right. Set <code>data-legend="T"</code>, <code>B</code>, <code>L</code>, <code>R</code>, or <code>0</code>.</p>
+<div class="demo">
+<div class="chart" data-legend="T" data-w="700" data-h="320">
+Month,Tom,Sam,Peter;
+Jan,120,180,90;
+Feb,160,130,150;
+Mar,190,210,170
+</div>
+</div>
+
+<h2>13. Cumulative values</h2>
+<p><code>data-y-sum="1"</code> converts each series to a running cumulative total before rendering.</p>
+<div class="demo">
+<div class="chart" data-chart="line" data-y-sum="1" data-title="Cumulative Orders" data-w="700" data-h="320">
+Month,Orders;
+Jan,10;
+Feb,20;
+Mar,15;
+Apr,30
+</div>
+</div>
+
+<h2>14. Group width</h2>
+<p><code>data-group-width="0.78"</code> controls how much of each category slot the bars occupy.</p>
+<div class="demo">
+<div class="chart" data-group-width="0.6" data-w="700" data-h="300">
+Month,A,B,C;
+Jan,12,18,9;
+Feb,16,13,15;
+Mar,19,21,17
+</div>
+</div>
+
+<h2>15. Main options</h2>
+<table>
+<tr><th>Attribute</th><th>Purpose</th><th>Default</th></tr>
+<tr><td>data-chart</td><td>bar, stack, line, pie, donut</td><td>bar</td></tr>
+<tr><td>data-w / data-h</td><td>SVG viewBox size</td><td>480 / 250</td></tr>
+<tr><td>data-title</td><td>Chart title</td><td>none</td></tr>
+<tr><td>data-x-title / data-y-title</td><td>Axis titles</td><td>none</td></tr>
+<tr><td>data-y-unit</td><td>Unit appended to Y labels</td><td>none</td></tr>
+<tr><td>data-val-show</td><td>Show values</td><td>0</td></tr>
+<tr><td>data-val-angle</td><td>Rotate value labels</td><td>0</td></tr>
+<tr><td>data-x-angle</td><td>Rotate X labels</td><td>0</td></tr>
+<tr><td>data-x-skip / data-x-skip-max</td><td>Reduce crowded X labels</td><td>0 / 12</td></tr>
+<tr><td>data-legend</td><td>T, B, L, R, 0</td><td>automatic</td></tr>
+<tr><td>data-group-width</td><td>Bar width within category slot</td><td>0.78</td></tr>
+<tr><td>data-y-sum</td><td>Cumulative series</td><td>0</td></tr>
+<tr><td>data-pie-pct</td><td>Show pie percentage</td><td>0</td></tr>
+<tr><td>data-pie-stripe</td><td>Pie stripe decoration</td><td>0</td></tr>
+<tr><td>data-pie-arc</td><td>Pie starting angle</td><td>0</td></tr>
+</table>
+
+<h2>16. PHP output</h2>
+<p>The recommended boundary is simple: PHP prepares the data in the canonical chart format; JavaScript only renders it.</p>
+<pre>&lt;div class="chart" data-title="Monthly Sales"&gt;
+&lt;?= chart_data($rows) ?&gt;
+&lt;/div&gt;</pre>
+
+<p>The frontend therefore never needs to know whether the original data came from SQL, an API, PHP arrays, or another backend source.</p>
+
+<h2>Design rule</h2>
+<p><strong>Good chart with zero configuration. Add attributes only when something needs to change.</strong></p>
+
+</body>
+</html>
