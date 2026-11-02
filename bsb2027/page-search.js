@@ -384,7 +384,7 @@ function searchReport(data, form) {
   rows.forEach(row => {
     html += `<tr><td class="ymd-rep">${row.ymd}</td>`;
     cats.forEach(cat => {
-      html += `<td class="ar">${BSB.fmtAmt(row[cat] / 100)}</td>`;
+      html += `<td class="ar${row[cat] < 0 ? ' red' : ''}">${BSB.fmtAmt(row[cat] / 100)}</td>`;
     });
     html += '</tr>';
   });
