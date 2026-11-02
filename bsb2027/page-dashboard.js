@@ -351,6 +351,34 @@ e(document).on('click', 'td.cellQ', function () {
   e('.cellQ' + e(this).text()).toggleClass('hide');
 });
 
+e(document).on('click', '#dashboard-balance tr:not(:first-child) td:not(:first-child):not(:last-child)', function () {
+  const el = e(this);
+  const i = el.index();
+  const cat = el.parents('tr').attr('tr');
+
+  let ymd = el.parents('table').find('tr:first-child').children().eq(i).text();
+  let dlen;
+  if (/^\d{4}$/.test(ymd)) {
+    dlen = 'Y'; // 2026
+  } else if (/^\d{4}Q[1-4]$/.test(ymd)) {
+    dlen = 'Q'; // 2026Q3
+  } else if (/^\d{6}$/.test(ymd)) {
+    dlen = 'M'; // 202612
+    ymd = ymd.slice(0, 4) + '-' + ymd.slice(4); // 2026-12
+  }
+  const [ymdFm, ymdTo] = BSB.mode2Dates(ymd, dlen);
+
+  e('#search-ymdFm').val(ymdFm);
+  e('#search-ymdTo').val(ymdTo);
+  e('#search-cat').val(cat);
+  e('#search-cat2').val('');
+  search();
+  e('#page-dashboard').addClass('hide');
+  e('#page-search').removeClass('hide');
+  e('.search-more').removeClass('hide');
+});
+
+
 function buildTimeline(data) {
   const yms = Object.keys(data).sort();
   if (!yms.length) return { cols: {}, months: {}, quarters: {}, years: {} };

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reset Storage</title>
+<style>
+body { font: 16px Arial; padding: 20px; }
+button { padding: 12px; margin: 8px 0; display: block; }
+</style>
+</head>
+<body>
+
+<h3>Reset Storage</h3>
+
+<button onclick="resetPassword()">Delete Password</button>
+<button onclick="resetBook()">Delete IndexedDB: book</button>
+
+<script>
+function resetPassword() {
+  if (!confirm('Delete password?')) return;
+  localStorage.removeItem('pass');
+  alert('Password deleted');
+}
+
+function resetBook() {
+  const aid = localStorage.getItem('aid');
+  if (!aid) {
+    alert('No aid found in localStorage');
+    return;
+  }
+
+  if (!confirm(`Clear all records in book store BSB${aid}?`)) return;
+
+  const req = indexedDB.open('BSB' + aid);
+
+  req.onsuccess = () => {
+    const db = req.result;
+
+    if (!db.objectStoreNames.contains('book')) {
+      alert('Object store "book" not found');
+      db.close();
+      return;
+    }
+
+    const tx = db.transaction('book', 'readwrite');
+    const store = tx.objectStore('book');
+    store.clear();
+
+    tx.oncomplete = () => {
+      alert(`Book store cleared in BSB${aid}`);
+      db.close();
+    };
+
+    tx.onerror = () => {
+      alert('Error: ' + tx.error);
+      db.close();
+    };
+
+    tx.onabort = () => db.close();
+  };
+
+  req.onerror = () => {
+    alert('Error opening database: ' + req.error);
+  };
+
+  req.onblocked = () => {
+    alert('Close other pages using the database, then retry');
+  };
+}
+</script>
+
+</body>
+</html>

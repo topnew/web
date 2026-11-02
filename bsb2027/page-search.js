@@ -388,6 +388,15 @@ function searchReport(data, form) {
     });
     html += '</tr>';
   });
+
+  // Total row
+  html += '<tr class="b-green"><td>Total</td>';
+  cats.forEach(cat => {
+    const total = rows.reduce((sum, row) => sum + row[cat], 0);
+    html += `<td class="ar${total < 0 ? ' red' : ''}">${BSB.fmtAmt(total / 100)}</td>`;
+  });
+  html += '</tr>';
+
   html += '</table></div>';
   e('#search-data').html(html);
 }

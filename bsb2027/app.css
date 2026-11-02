@@ -75,6 +75,8 @@ input,button,select,label{width:100%;box-sizing:border-box}
 #page-setting label{width:auto}
 #page-setting label input{width:auto}
 
+#dashboard-balance td:first-child{position:sticky;left:0;background:#fdfaf6;z-index:1}
+
 @media (max-width:1023px){
   #head nav{gap:30px}
   #company n.com-code{display:inline}
